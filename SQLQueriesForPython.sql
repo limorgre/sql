@@ -94,15 +94,14 @@ CREATE VIEW SalesRelationship
 AS
 SELECT TBL.InsuredID, TBL.InsuredStatus, TBL.PolicyId, TBL.PoliciesTotalSum, AVG(TBL.Salary)OVER(PARTITION BY TBL.PolicyId) AS AvgSalary
 , AVG(TBL.Age)OVER(PARTITION BY TBL.PolicyId) AS AvgAge  
-FROM(
-	 SELECT DISTINCT PD.InsuredID, PD.InsuredStatus, PD.PolicyId 
-	 ,SUM(PD.Price_Before_Discuont1*(1-DP.Discount))OVER(PARTITION BY PD.PolicyId) AS PoliciesTotalSum
-	 , C.Salary, DATEDIFF(YY,C.BirthDate,GETDATE()) AS Age
-	 FROM PolicyDetails1 PD JOIN Customers C
-	 ON PD.InsuredID=C.Id
-		 JOIN DiscountPackage DP
-	 ON PD.DiscountPackageID=DP.DiscountPackageID
-	 WHERE PD.InsuredStatus=1 OR PD.InsuredStatus=2)TBL
+FROM(SELECT DISTINCT PD.InsuredID, PD.InsuredStatus, PD.PolicyId 
+     ,SUM(PD.Price_Before_Discuont1*(1-DP.Discount))OVER(PARTITION BY PD.PolicyId) AS PoliciesTotalSum
+     ,C.Salary, DATEDIFF(YY,C.BirthDate,GETDATE()) AS Age
+     FROM PolicyDetails1 PD JOIN Customers C
+     ON PD.InsuredID=C.Id
+	  JOIN DiscountPackage DP
+     ON PD.DiscountPackageID=DP.DiscountPackageID
+     WHERE PD.InsuredStatus=1 OR PD.InsuredStatus=2)TBL
 WHERE TBL.InsuredStatus=1
 
 
