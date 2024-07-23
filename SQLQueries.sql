@@ -12,9 +12,9 @@ WHERE P.ProductID IN (SELECT PR.ProductID
 --Question 2
 /* The database schema is one in which customer details who have never placed an order are not stored. Therefore, all customers who have not placed an order are
 essentially customer codes without any additional details*/
- SELECT CU.CustomerID, IIF(CU.PersonID  IS NULL, 'Unknown', CAST(CU.PersonID AS VARCHAR) )AS Name --NULL  PERSINID äåà ò"é  PERSON äæéäåé ùìäí áèáìú 
+ SELECT CU.CustomerID, IIF(CU.PersonID  IS NULL, 'Unknown', CAST(CU.PersonID AS VARCHAR) )AS Name --NULL  Their identification in the PERSON table is by the PERSONID         
  FROM   Sales.Customer CU
- WHERE  CU.CustomerID IN (SELECT C.CustomerID--701 äì÷åçåú ùìà áéöòå äæîðåú
+ WHERE  CU.CustomerID IN (SELECT C.CustomerID--701 Customers who have not placed orders
 			  FROM Sales.Customer C
 			  EXCEPT
 			  SELECT SOH.CustomerID
@@ -22,7 +22,7 @@ essentially customer codes without any additional details*/
  
 
  --Another way to solve
- SELECT CU.CustomerID, IIF(CU.PersonID  IS NULL, 'Unknown', CAST(CU.PersonID AS VARCHAR) )AS Name --NULL  PERSINID äåà ò"é  PERSON äæéäåé ùìäí áèáìú 
+ SELECT CU.CustomerID, IIF(CU.PersonID  IS NULL, 'Unknown', CAST(CU.PersonID AS VARCHAR) )AS Name --NULL  Their identification in the PERSON table is by the PERSONID 
  FROM   Sales.Customer CU
  WHERE  CU.CustomerID IN(SELECT C.CustomerID
 			 FROM Sales.Customer C LEFT JOIN Sales.SalesOrderHeader SOH
