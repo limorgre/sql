@@ -15,7 +15,7 @@ USE MenoraMivt;
 GO
 
 
-CREATE TABLE InsCategory --θαμϊ χθβεψιεϊ ξεφψιν
+CREATE TABLE InsCategory --Product Categories Table
 (InsCategoryId INT CONSTRAINT InsCategory_InsCategoryId_pk PRIMARY KEY,
  InsCategoryName VARCHAR(30) NOT NULL,
  InsCategoryDescription VARCHAR(200) 
@@ -23,7 +23,7 @@ CREATE TABLE InsCategory --θαμϊ χθβεψιεϊ ξεφψιν
  
 GO
 
-CREATE TABLE DiscountPackage  -- θαμϊ ηαιμεϊ δπηδ-μλμ ξεφψ ηαιμϊ δπηδ ΰηϊ μωιξεω  
+CREATE TABLE DiscountPackage  --Discount Packages Table-Each product is entitled to one discount package for use
 (DiscountPackageID INT CONSTRAINT DiscountPackage_DiscountPackageID_pk PRIMARY KEY ,
  Discount REAL NOT NULL,
  NumOfYears INT NOT NULL, 
@@ -33,12 +33,12 @@ CREATE TABLE DiscountPackage  -- θαμϊ ηαιμεϊ δπηδ-μλμ ξεφψ ηαιμϊ δπηδ ΰηϊ μωιξεω
 
  GO
 
-CREATE TABLE InsProducts --θαμϊ ξεφψι αιθεη
+CREATE TABLE InsProducts --Γ¨Γ΅Γ¬ΓΊ Γ®Γ¥Γ¶ΓΈΓ© Γ΅Γ©Γ¨Γ¥Γ§
 (InsProductId INT CONSTRAINT InsProducts_InsProductId_pk PRIMARY KEY,
  InsProductName VARCHAR(50) NOT NULL,
  InsCategoryId INT NOT NULL CONSTRAINT InsProducts_InsCategoryId_fk FOREIGN KEY REFERENCES InsCategory(InsCategoryId) ,
- DiscountPackageID INT CONSTRAINT InsProducts_DiscountPackageID_fk FOREIGN KEY REFERENCES DiscountPackage(DiscountPackageID),--ηαιμϊ δπηδ λιεν διΰ ΰηεζ δπηδ χαες μξρτψ ωπιν μλμ ξεφψ
- "Indemnity or compensation" VARCHAR(2) NOT NULL, -- δΰν ξεφψ ωιτει ΰε τιφει
+ DiscountPackageID INT CONSTRAINT InsProducts_DiscountPackageID_fk FOREIGN KEY REFERENCES DiscountPackage(DiscountPackageID),--Γ§Γ΅Γ©Γ¬ΓΊ Γ¤Γ°Γ§Γ¤ Γ«Γ©Γ¥Γ­ Γ¤Γ©Γ  Γ Γ§Γ¥Γ¦ Γ¤Γ°Γ§Γ¤ Γ·Γ΅Γ¥Γ² Γ¬Γ®Γ±Γ΄ΓΈ ΓΉΓ°Γ©Γ­ Γ¬Γ«Γ¬ Γ®Γ¥Γ¶ΓΈ
+ "Indemnity or compensation" VARCHAR(2) NOT NULL, -- Γ¤Γ Γ­ Γ®Γ¥Γ¶ΓΈ ΓΉΓ©Γ΄Γ¥Γ© Γ Γ¥ Γ΄Γ©Γ¶Γ¥Γ©
  StartDate DATE NOT NULL,
  EndDate DATE,
  Details VARCHAR(200) NULL
@@ -46,7 +46,7 @@ CREATE TABLE InsProducts --θαμϊ ξεφψι αιθεη
  
 GO
 
-CREATE TABLE Marketers --θαμϊ ξωεεχιν
+CREATE TABLE Marketers --Γ¨Γ΅Γ¬ΓΊ Γ®ΓΉΓ¥Γ¥Γ·Γ©Γ­
 (EmployeeId INT IDENTITY CONSTRAINT Marketers_EmployeeId_pk PRIMARY KEY,
  FirstName VARCHAR(15) NOT NULL,
  LastName VARCHAR(15) NOT NULL,
@@ -63,21 +63,21 @@ CREATE TABLE Marketers --θαμϊ ξωεεχιν
    
 GO
 
-CREATE TABLE CreditCards --τψθι ΰωψΰι ιλεμιν μδιεϊ ωμ δμχεη ΰε λμ αο ξωτηδ ξχψαδ ψΰωεπδ ωΰιπε μχεη 
+CREATE TABLE CreditCards --Γ΄ΓΈΓ¨Γ© Γ ΓΉΓΈΓ Γ© Γ©Γ«Γ¥Γ¬Γ©Γ­ Γ¬Γ¤Γ©Γ¥ΓΊ ΓΉΓ¬ Γ¤Γ¬Γ·Γ¥Γ§ Γ Γ¥ Γ«Γ¬ Γ΅Γ― Γ®ΓΉΓ΄Γ§Γ¤ Γ®Γ·ΓΈΓ΅Γ¤ ΓΈΓ ΓΉΓ¥Γ°Γ¤ ΓΉΓ Γ©Γ°Γ¥ Γ¬Γ·Γ¥Γ§ 
 ( CardNumber VARCHAR(20)  CONSTRAINT CreditCards_CardNumber_pk PRIMARY KEY,
  CardType VARCHAR(25) NOT NULL, 
  ExpMonth INT NOT NULL,
  ExpYear INT NOT NULL,
- Num_3 VARCHAR(5) NOT NULL,--ρτψεϊ αβα δλψθιρ
- CreditOwnerId VARCHAR(9) NOT NULL,--ϊ.ζ. αςμ δλψθιρ
+ Num_3 VARCHAR(5) NOT NULL,--Γ±Γ΄ΓΈΓ¥ΓΊ Γ΅ΓΆΓ΅ Γ¤Γ«ΓΈΓ¨Γ©Γ±
+ CreditOwnerId VARCHAR(9) NOT NULL,--ΓΊ.Γ¦. Γ΅Γ²Γ¬ Γ¤Γ«ΓΈΓ¨Γ©Γ±
  Lname VARCHAR(15) NOT NULL,
  Fname VARCHAR(10) NOT NULL,
  )
 
  GO
 
-CREATE TABLE Customers --θαμϊ μχεηεϊ= τψθι ξαεθη ψΰωι/ξωπι
-(Id VARCHAR(9) CONSTRAINT Customers_ID_pk PRIMARY KEY,--ϊ.ζ. ξαεθη
+CREATE TABLE Customers --Γ¨Γ΅Γ¬ΓΊ Γ¬Γ·Γ¥Γ§Γ¥ΓΊ= Γ΄ΓΈΓ¨Γ© Γ®Γ΅Γ¥Γ¨Γ§ ΓΈΓ ΓΉΓ©/Γ®ΓΉΓ°Γ©
+(Id VARCHAR(9) CONSTRAINT Customers_ID_pk PRIMARY KEY,--ΓΊ.Γ¦. Γ®Γ΅Γ¥Γ¨Γ§
  Lname VARCHAR(15) NOT NULL,
  Fname VARCHAR(10) NOT NULL,
  Phone VARCHAR(11) NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE Customers --θαμϊ μχεηεϊ= τψθι ξαεθη ψΰωι/ξωπι
 
  GO 
 
-CREATE TABLE Direct_Debit --τψθι απχ ωμ δξαεθη δψΰωι/ξωπι =μχεηεϊ 
+CREATE TABLE Direct_Debit --Γ΄ΓΈΓ¨Γ© Γ΅Γ°Γ· ΓΉΓ¬ Γ¤Γ®Γ΅Γ¥Γ¨Γ§ Γ¤ΓΈΓ ΓΉΓ©/Γ®ΓΉΓ°Γ© =Γ¬Γ·Γ¥Γ§Γ¥ΓΊ 
 (BankNumber VARCHAR(5),
  BranchNumber VARCHAR(5),
  AccountNumber VARCHAR(15),
@@ -106,9 +106,9 @@ CREATE TABLE Direct_Debit --τψθι απχ ωμ δξαεθη δψΰωι/ξωπι =μχεηεϊ
 GO
 
 
-CREATE TABLE "Policy"  --θαμϊ τεμιρεϊ
+CREATE TABLE "Policy"  --Γ¨Γ΅Γ¬ΓΊ Γ΄Γ¥Γ¬Γ©Γ±Γ¥ΓΊ
 (PolicyId VARCHAR(15) CONSTRAINT Policy_PolicyId_pk PRIMARY KEY,
- EmployeeID INT NOT NULL CONSTRAINT Policy_EmployeeID_fk FOREIGN KEY REFERENCES Marketers(EmployeeID) , --ϊ.ζ. ξωεεχ
+ EmployeeID INT NOT NULL CONSTRAINT Policy_EmployeeID_fk FOREIGN KEY REFERENCES Marketers(EmployeeID) , --ΓΊ.Γ¦. Γ®ΓΉΓ¥Γ¥Γ·
  CardNumber VARCHAR(20) NULL CONSTRAINT Policy_CardNumber_fk FOREIGN KEY REFERENCES CreditCards(CardNumber),
  BankNumber VARCHAR(5),
  BranchNumber VARCHAR(5),
@@ -120,19 +120,19 @@ CREATE TABLE "Policy"  --θαμϊ τεμιρεϊ
 
  
 
- CREATE TABLE PolicyDetails  --θαμϊ τψθι τεμιρεϊ
+ CREATE TABLE PolicyDetails  --Γ¨Γ΅Γ¬ΓΊ Γ΄ΓΈΓ¨Γ© Γ΄Γ¥Γ¬Γ©Γ±Γ¥ΓΊ
 (PolicyId VARCHAR(15) CONSTRAINT PolicyDetails_PolicyId_fk FOREIGN KEY REFERENCES Policy(PolicyId), 
- InsuredID VARCHAR(9) CONSTRAINT PolicyDetails_InsuredID_fk FOREIGN KEY REFERENCES Customers(ID), -- (ϊ.ζ. ξαεθη (ψΰωι/ξωπι/ιμγιν
- InsProductId INT CONSTRAINT PolicyDetails_InsProductId_fk FOREIGN KEY REFERENCES  InsProducts(InsProductId), --ξρτψ ξεφψ αιθεη
- InsuredStatus INT NOT NULL, --  ρθθερ δξαεθη  1=ψΰωι  2=ξωπι 3=ιμγιν
+ InsuredID VARCHAR(9) CONSTRAINT PolicyDetails_InsuredID_fk FOREIGN KEY REFERENCES Customers(ID), -- (ΓΊ.Γ¦. Γ®Γ΅Γ¥Γ¨Γ§ (ΓΈΓ ΓΉΓ©/Γ®ΓΉΓ°Γ©/Γ©Γ¬Γ£Γ©Γ­
+ InsProductId INT CONSTRAINT PolicyDetails_InsProductId_fk FOREIGN KEY REFERENCES  InsProducts(InsProductId), --Γ®Γ±Γ΄ΓΈ Γ®Γ¥Γ¶ΓΈ Γ΅Γ©Γ¨Γ¥Γ§
+ InsuredStatus INT NOT NULL, --  Γ±Γ¨Γ¨Γ¥Γ± Γ¤Γ®Γ΅Γ¥Γ¨Γ§  1=ΓΈΓ ΓΉΓ©  2=Γ®ΓΉΓ°Γ© 3=Γ©Γ¬Γ£Γ©Γ­
  Policy_Start_Date DATE NOT NULL,
  Policy_End_Date DATE NULL,
  Policy_End_Reason VARCHAR(15) Null, 
  Price_Before_Discuont1 MONEY NOT NULL,
- DiscountPackageID INT CONSTRAINT PolicyDetails_DiscountPackageID_fk FOREIGN KEY REFERENCES  DiscountPackage(DiscountPackageID),-- δημθϊ δξωεεχ δΰν μϊϊ δπηδ μτεμιρδ ΰε μΰ, μλο δςξεγδ ξετιςδ αθαμδ ζε  
- CompensationSum MONEY NULL,  --ρλεν δτιφει - ατεμιρϊ τιφει αμαγ
- Smoke BIT NOT NULL ,  -- δΰν ξςωο (αιεν δτχϊ δτεμιρδ)  1=λο  0=μΰ
- CONSTRAINT PolicyDetails_PolicyId_InsuredIDΙΙΙ_InsProductId_pk PRIMARY KEY (PolicyId, InsuredID, InsProductId)
+ DiscountPackageID INT CONSTRAINT PolicyDetails_DiscountPackageID_fk FOREIGN KEY REFERENCES  DiscountPackage(DiscountPackageID),-- Γ¤Γ§Γ¬Γ¨ΓΊ Γ¤Γ®ΓΉΓ¥Γ¥Γ· Γ¤Γ Γ­ Γ¬ΓΊΓΊ Γ¤Γ°Γ§Γ¤ Γ¬Γ΄Γ¥Γ¬Γ©Γ±Γ¤ Γ Γ¥ Γ¬Γ , Γ¬Γ«Γ― Γ¤Γ²Γ®Γ¥Γ£Γ¤ Γ®Γ¥Γ΄Γ©Γ²Γ¤ Γ΅Γ¨Γ΅Γ¬Γ¤ Γ¦Γ¥  
+ CompensationSum MONEY NULL,  --Γ±Γ«Γ¥Γ­ Γ¤Γ΄Γ©Γ¶Γ¥Γ© - Γ΅Γ΄Γ¥Γ¬Γ©Γ±ΓΊ Γ΄Γ©Γ¶Γ¥Γ© Γ΅Γ¬Γ΅Γ£
+ Smoke BIT NOT NULL ,  -- Γ¤Γ Γ­ Γ®Γ²ΓΉΓ― (Γ΅Γ©Γ¥Γ­ Γ¤Γ΄Γ·ΓΊ Γ¤Γ΄Γ¥Γ¬Γ©Γ±Γ¤)  1=Γ«Γ―  0=Γ¬Γ 
+ CONSTRAINT PolicyDetails_PolicyId_InsuredIDΓ‰Γ‰Γ‰_InsProductId_pk PRIMARY KEY (PolicyId, InsuredID, InsProductId)
  )
 
  GO 
