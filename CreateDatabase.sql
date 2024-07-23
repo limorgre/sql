@@ -37,7 +37,7 @@ CREATE TABLE InsProducts --Insurance products table
 (InsProductId INT CONSTRAINT InsProducts_InsProductId_pk PRIMARY KEY,
  InsProductName VARCHAR(50) NOT NULL,
  InsCategoryId INT NOT NULL CONSTRAINT InsProducts_InsCategoryId_fk FOREIGN KEY REFERENCES InsCategory(InsCategoryId) ,
- DiscountPackageID INT CONSTRAINT InsProducts_DiscountPackageID_fk FOREIGN KEY REFERENCES DiscountPackage(DiscountPackageID),--çáéìú äðçä ëéåí äéà àçåæ äðçä ÷áåò ìîñôø ùðéí ìëì îåöø
+ DiscountPackageID INT CONSTRAINT InsProducts_DiscountPackageID_fk FOREIGN KEY REFERENCES DiscountPackage(DiscountPackageID),--Discount package today is a fixed percentage discount for a number of years for each product
  "Indemnity or compensation" VARCHAR(2) NOT NULL, -- Is the product a compensation or indemnity type product
  StartDate DATE NOT NULL,
  EndDate DATE,
