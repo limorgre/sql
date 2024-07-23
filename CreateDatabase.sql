@@ -33,12 +33,12 @@ CREATE TABLE DiscountPackage  --Discount Packages Table-Each product is entitled
 
  GO
 
-CREATE TABLE InsProducts --èáìú îåöøé áéèåç
+CREATE TABLE InsProducts --Insurance products table
 (InsProductId INT CONSTRAINT InsProducts_InsProductId_pk PRIMARY KEY,
  InsProductName VARCHAR(50) NOT NULL,
  InsCategoryId INT NOT NULL CONSTRAINT InsProducts_InsCategoryId_fk FOREIGN KEY REFERENCES InsCategory(InsCategoryId) ,
  DiscountPackageID INT CONSTRAINT InsProducts_DiscountPackageID_fk FOREIGN KEY REFERENCES DiscountPackage(DiscountPackageID),--çáéìú äðçä ëéåí äéà àçåæ äðçä ÷áåò ìîñôø ùðéí ìëì îåöø
- "Indemnity or compensation" VARCHAR(2) NOT NULL, -- äàí îåöø ùéôåé àå ôéöåé
+ "Indemnity or compensation" VARCHAR(2) NOT NULL, -- Is the product a compensation or indemnity type product
  StartDate DATE NOT NULL,
  EndDate DATE,
  Details VARCHAR(200) NULL
@@ -46,7 +46,7 @@ CREATE TABLE InsProducts --èáìú îåöøé áéèåç
  
 GO
 
-CREATE TABLE Marketers --èáìú îùåå÷éí
+CREATE TABLE Marketers 
 (EmployeeId INT IDENTITY CONSTRAINT Marketers_EmployeeId_pk PRIMARY KEY,
  FirstName VARCHAR(15) NOT NULL,
  LastName VARCHAR(15) NOT NULL,
@@ -63,21 +63,21 @@ CREATE TABLE Marketers --èáìú îùåå÷éí
    
 GO
 
-CREATE TABLE CreditCards --ôøèé àùøàé éëåìéí ìäéåú ùì äì÷åç àå ëì áï îùôçä î÷øáä øàùåðä ùàéðå ì÷åç 
+CREATE TABLE CreditCards --Credit details can be those of the customer or any immediate family member who is not a customer
 ( CardNumber VARCHAR(20)  CONSTRAINT CreditCards_CardNumber_pk PRIMARY KEY,
  CardType VARCHAR(25) NOT NULL, 
  ExpMonth INT NOT NULL,
  ExpYear INT NOT NULL,
- Num_3 VARCHAR(5) NOT NULL,--ñôøåú áâá äëøèéñ
- CreditOwnerId VARCHAR(9) NOT NULL,--ú.æ. áòì äëøèéñ
+ Num_3 VARCHAR(5) NOT NULL,--digits on the back of the credit card
+ CreditOwnerId VARCHAR(9) NOT NULL,--ID number of the credit card holder
  Lname VARCHAR(15) NOT NULL,
  Fname VARCHAR(10) NOT NULL,
  )
 
  GO
 
-CREATE TABLE Customers --èáìú ì÷åçåú= ôøèé îáåèç øàùé/îùðé
-(Id VARCHAR(9) CONSTRAINT Customers_ID_pk PRIMARY KEY,--ú.æ. îáåèç
+CREATE TABLE Customers --Customer table = main insured/secondary/children details
+(Id VARCHAR(9) CONSTRAINT Customers_ID_pk PRIMARY KEY,
  Lname VARCHAR(15) NOT NULL,
  Fname VARCHAR(10) NOT NULL,
  Phone VARCHAR(11) NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE Customers --èáìú ì÷åçåú= ôøèé îáåèç øàùé/î�
 
  GO 
 
-CREATE TABLE Direct_Debit --ôøèé áð÷ ùì äîáåèç äøàùé/îùðé =ì÷åçåú 
+CREATE TABLE Direct_Debit --Bank details of the main/secondary insured = Customers
 (BankNumber VARCHAR(5),
  BranchNumber VARCHAR(5),
  AccountNumber VARCHAR(15),
@@ -106,9 +106,9 @@ CREATE TABLE Direct_Debit --ôøèé áð÷ ùì äîáåèç äøàùé/îùð�
 GO
 
 
-CREATE TABLE "Policy"  --èáìú ôåìéñåú
+CREATE TABLE "Policy"  --Policies Table
 (PolicyId VARCHAR(15) CONSTRAINT Policy_PolicyId_pk PRIMARY KEY,
- EmployeeID INT NOT NULL CONSTRAINT Policy_EmployeeID_fk FOREIGN KEY REFERENCES Marketers(EmployeeID) , --ú.æ. îùåå÷
+ EmployeeID INT NOT NULL CONSTRAINT Policy_EmployeeID_fk FOREIGN KEY REFERENCES Marketers(EmployeeID) , --Marketer's ID
  CardNumber VARCHAR(20) NULL CONSTRAINT Policy_CardNumber_fk FOREIGN KEY REFERENCES CreditCards(CardNumber),
  BankNumber VARCHAR(5),
  BranchNumber VARCHAR(5),
@@ -120,9 +120,9 @@ CREATE TABLE "Policy"  --èáìú ôåìéñåú
 
  
 
- CREATE TABLE PolicyDetails  --èáìú ôøèé ôåìéñåú
+ CREATE TABLE PolicyDetails  --Policy Details Table
 (PolicyId VARCHAR(15) CONSTRAINT PolicyDetails_PolicyId_fk FOREIGN KEY REFERENCES Policy(PolicyId), 
- InsuredID VARCHAR(9) CONSTRAINT PolicyDetails_InsuredID_fk FOREIGN KEY REFERENCES Customers(ID), -- (ú.æ. îáåèç (øàùé/îùðé/éìãéí
+ InsuredID VARCHAR(9) CONSTRAINT PolicyDetails_InsuredID_fk FOREIGN KEY REFERENCES Customers(ID), --ID number of the main insured/secondary insured/children
  InsProductId INT CONSTRAINT PolicyDetails_InsProductId_fk FOREIGN KEY REFERENCES  InsProducts(InsProductId), --îñôø îåöø áéèåç
  InsuredStatus INT NOT NULL, --  ñèèåñ äîáåèç  1=øàùé  2=îùðé 3=éìãéí
  Policy_Start_Date DATE NOT NULL,
