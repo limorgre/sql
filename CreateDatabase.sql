@@ -123,15 +123,15 @@ CREATE TABLE "Policy"  --Policies Table
  CREATE TABLE PolicyDetails  --Policy Details Table
 (PolicyId VARCHAR(15) CONSTRAINT PolicyDetails_PolicyId_fk FOREIGN KEY REFERENCES Policy(PolicyId), 
  InsuredID VARCHAR(9) CONSTRAINT PolicyDetails_InsuredID_fk FOREIGN KEY REFERENCES Customers(ID), --ID number of the main insured/secondary insured/children
- InsProductId INT CONSTRAINT PolicyDetails_InsProductId_fk FOREIGN KEY REFERENCES  InsProducts(InsProductId), --îñôø îåöø áéèåç
- InsuredStatus INT NOT NULL, --  ñèèåñ äîáåèç  1=øàùé  2=îùðé 3=éìãéí
+ InsProductId INT CONSTRAINT PolicyDetails_InsProductId_fk FOREIGN KEY REFERENCES  InsProducts(InsProductId), --Insurance product number
+ InsuredStatus INT NOT NULL, --Insured status: 1=Primary 2=Secondary 3=Children
  Policy_Start_Date DATE NOT NULL,
  Policy_End_Date DATE NULL,
  Policy_End_Reason VARCHAR(15) Null, 
  Price_Before_Discuont1 MONEY NOT NULL,
- DiscountPackageID INT CONSTRAINT PolicyDetails_DiscountPackageID_fk FOREIGN KEY REFERENCES  DiscountPackage(DiscountPackageID),-- äçìèú äîùåå÷ äàí ìúú äðçä ìôåìéñä àå ìà, ìëï äòîåãä îåôéòä áèáìä æå  
- CompensationSum MONEY NULL,  --ñëåí äôéöåé - áôåìéñú ôéöåé áìáã
- Smoke BIT NOT NULL ,  -- äàí îòùï (áéåí äô÷ú äôåìéñä)  1=ëï  0=ìà
+ DiscountPackageID INT CONSTRAINT PolicyDetails_DiscountPackageID_fk FOREIGN KEY REFERENCES  DiscountPackage(DiscountPackageID),--The decision of the marketer whether to grant a discount to the policy or not, therefore this column appears in this table 
+ CompensationSum MONEY NULL,  --Compensation amount - for compensation policy only
+ Smoke BIT NOT NULL ,  --Is the insured a smoker (on the policy issue date) 1=Yes 0=No
  CONSTRAINT PolicyDetails_PolicyId_InsuredIDÉÉÉ_InsProductId_pk PRIMARY KEY (PolicyId, InsuredID, InsProductId)
  )
 
